@@ -34,7 +34,7 @@ def read_xml_items(filepath):
 
 def write_packet(writer, ip_tcp_layers, item, item_key):
     raw = item[item_key]
-    text = raw[XML_KEY_RAW_VALUE]
+    text = raw.get(XML_KEY_RAW_VALUE, "")
     data = base64.b64decode(text) if raw[XML_KEY_RAW_BASE64] else text
     data = data[:WSHARK_MAX_PKT_LEN] if len(data) > WSHARK_MAX_PKT_LEN else data
     pkt = Ether()/ip_tcp_layers/HTTP(data)
